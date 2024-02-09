@@ -6,6 +6,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.Pane?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.demo.Shapes.ShapesController">
     <padding>
@@ -22,7 +23,6 @@
                 <String fx:value="Triangle" />
                 <String fx:value="Circle" />
                 <String fx:value="Oval" />
-                <String fx:value="Abstract" />
             </FXCollections>
         </items>
     </ComboBox>
@@ -41,6 +41,6 @@
         </items>
     </ComboBox>
 
-    <Canvas fx:id="drawCanvas" width="400" height="400" />
+    <Pane fx:id="drawPane"/>
 
 </VBox>
