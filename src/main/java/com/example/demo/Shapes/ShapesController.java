@@ -2,6 +2,7 @@ package com.example.demo.Shapes;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -18,6 +19,7 @@ public class ShapesController {
     private Pane drawPane;
 
     private double startX, startY;
+    private double endX, endY;
 
     @FXML
     private void initialize() {
@@ -34,27 +36,19 @@ public class ShapesController {
         drawPane.setBorder(new Border(borderStroke));
 
         drawPane.setOnMousePressed(event -> {
-            if (event.isSecondaryButtonDown()) {
-                startX = event.getX();
-                startY = event.getY();
-            }
-        });
+            if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line")) {
 
-        drawPane.setOnMouseReleased(event -> {
-            if (event.isSecondaryButtonDown()) {
-                double endX = event.getX();
-                double endY = event.getY();
+                boolean rightButtonHold = mouseRightButtonPressHold(event);
+                mouseRightButtonRelease(event, rightButtonHold);
+
                 createLine(startX, startY, endX, endY);
             }
         });
 
+
         drawPane.setOnMouseClicked(event -> {
             String selectedShape = shapeComboBox.getValue();
-            if (selectedShape != null) {
                 switch (selectedShape) {
-                    case "Line":
-
-                        break;
                     case "Dot":
                         createDot(event.getX(), event.getY());
                         break;
@@ -73,15 +67,37 @@ public class ShapesController {
                     case "Oval":
                         createOval(event.getX(), event.getY(), Color.PINK);
                         break;
-                }
             }
         });
     }
 
+    private boolean mouseRightButtonPressHold(MouseEvent event) {
+        boolean rightButtonPressedHold = event.isSecondaryButtonDown();
+
+        System.out.println("PressHold");
+        System.out.println("button: " + rightButtonPressedHold);
+
+        if (!rightButtonPressedHold) {
+            startX = event.getX();
+            startY = event.getY();
+        }
+
+        return rightButtonPressedHold;
+    }
+
+    private void mouseRightButtonRelease(MouseEvent event, boolean rightButtonPressedHold) {
+        System.out.println("Release");
+        System.out.println("button: " + rightButtonPressedHold);
+        if (rightButtonPressedHold) {
+            endX = event.getX();
+            endY = event.getY();
+        }
+    }
 
     private void createLine(double startX, double startY, double x, double y) {
         Line line = new Line(startX, startY, x, y);
         line.setStroke(Color.BLACK);
+        line.setStrokeWidth(2);
         drawPane.getChildren().add(line);
     }
 
