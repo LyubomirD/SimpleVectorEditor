@@ -1,6 +1,7 @@
 package com.example.demo.Shapes;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -37,61 +38,42 @@ public class ShapesController {
 
         drawPane.setOnMousePressed(event -> {
             if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line")) {
+                startX = event.getX();
+                startY = event.getY();
+            }
+        });
 
-                boolean rightButtonHold = mouseRightButtonPressHold(event);
-                mouseRightButtonRelease(event, rightButtonHold);
-
+        drawPane.setOnMouseReleased(event -> {
+            if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line")) {
+                double endX = event.getX();
+                double endY = event.getY();
                 createLine(startX, startY, endX, endY);
             }
         });
 
-
         drawPane.setOnMouseClicked(event -> {
             String selectedShape = shapeComboBox.getValue();
-                switch (selectedShape) {
-                    case "Dot":
-                        createDot(event.getX(), event.getY());
-                        break;
-                    case "Square":
-                        createSquare(event.getX(), event.getY(), Color.RED);
-                        break;
-                    case "Rectangle":
-                        createRectangle(event.getX(), event.getY(), Color.BLUE);
-                        break;
-                    case "Triangle":
-                        createTriangle(event.getX(), event.getY(), Color.GREEN);
-                        break;
-                    case "Circle":
-                        createCircle(event.getX(), event.getY(), Color.ORANGE);
-                        break;
-                    case "Oval":
-                        createOval(event.getX(), event.getY(), Color.PINK);
-                        break;
+            switch (selectedShape) {
+                case "Dot":
+                    createDot(event.getX(), event.getY());
+                    break;
+                case "Square":
+                    createSquare(event.getX(), event.getY(), Color.RED);
+                    break;
+                case "Rectangle":
+                    createRectangle(event.getX(), event.getY(), Color.BLUE);
+                    break;
+                case "Triangle":
+                    createTriangle(event.getX(), event.getY(), Color.GREEN);
+                    break;
+                case "Circle":
+                    createCircle(event.getX(), event.getY(), Color.ORANGE);
+                    break;
+                case "Oval":
+                    createOval(event.getX(), event.getY(), Color.PINK);
+                    break;
             }
         });
-    }
-
-    private boolean mouseRightButtonPressHold(MouseEvent event) {
-        boolean rightButtonPressedHold = event.isSecondaryButtonDown();
-
-        System.out.println("PressHold");
-        System.out.println("button: " + rightButtonPressedHold);
-
-        if (!rightButtonPressedHold) {
-            startX = event.getX();
-            startY = event.getY();
-        }
-
-        return rightButtonPressedHold;
-    }
-
-    private void mouseRightButtonRelease(MouseEvent event, boolean rightButtonPressedHold) {
-        System.out.println("Release");
-        System.out.println("button: " + rightButtonPressedHold);
-        if (rightButtonPressedHold) {
-            endX = event.getX();
-            endY = event.getY();
-        }
     }
 
     private void createLine(double startX, double startY, double x, double y) {
@@ -138,3 +120,43 @@ public class ShapesController {
         drawPane.getChildren().add(ellipse);
     }
 }
+
+/*
+drawingCanvas.setOnMousePressed(event -> {
+        this.startX = event.getX();
+        this.startY = event.getY();
+        String selectedShape = shapeComboBox.getValue();
+        if(selectedShape.equals("Polygon")){
+            polygonPoints.add(new Point2D(this.startX, this.startY));
+        }
+
+        // Start the timeline when the user starts drawing
+        drawTimeline.playFromStart();
+    });
+
+    drawingCanvas.setOnMouseDragged(event -> {
+        double endX = event.getX();
+        double endY = event.getY();
+
+        // Draw the partial shape while the user is still dragging
+        drawSelectedShape(startX, startY, endX, endY);
+    });
+
+    drawingCanvas.setOnMouseReleased(event -> {
+        double endX = event.getX();
+        double endY = event.getY();
+        String selectedShape = shapeComboBox.getValue();
+        if(selectedShape.equals("Polygon")){
+            polygonPoints.add(new Point2D(startX, startY));
+        }
+
+        // Stop the timeline when the user releases the mouse
+        drawTimeline.stop();
+        drawSelectedShape(startX, startY, endX, endY);
+    });
+
+
+
+
+
+ */
