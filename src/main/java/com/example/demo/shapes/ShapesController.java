@@ -36,6 +36,9 @@ public class ShapesController {
     private Slider sliderWight;
 
 
+    //TODO make the shapes when they are dragged and dropped to not go outside the Pane border
+    //TODO after creating a line to stop making ones
+
     private final MousePressReleaseController mousePressReleaseController;
     private final OpacityController opacityController;
 
@@ -110,27 +113,14 @@ public class ShapesController {
     private void createLine(MouseEvent event) {
         double startX = event.getX();
         double startY = event.getY();
-        Line line = new Line(startX, startY, startX, startY); // Initialize the line with a single point
-
-        // Add the line to the drawPane
-        line.setStroke(changeColor());
-        line.setStrokeWidth(lineAndDotWight());
-        drawPane.getChildren().add(line);
-
-        // Set event handler for mouse drag to update the end point of the line
-        drawPane.setOnMouseDragged(event2 -> {
+        mousePressReleaseController.setOnMouseReleased(drawPane, shapeComboBox, event2 -> {
             double endX = event2.getX();
             double endY = event2.getY();
-            line.setEndX(endX);
-            line.setEndY(endY);
-        });
 
-        // Set event handler for mouse release to remove the drag event and reset the drawPane event
-        drawPane.setOnMouseReleased(event2 -> {
-            drawPane.setOnMouseDragged(null); // Remove the drag event handler
-            drawPane.setOnMousePressed(event3 -> {
-                event3.consume(); // Consume the event to prevent it from triggering further actions
-            });
+            Line line = new Line(startX, startY, endX, endY);
+            line.setStroke(changeColor());
+            line.setStrokeWidth(lineAndDotWight());
+            drawPane.getChildren().add(line);
         });
     }
 
