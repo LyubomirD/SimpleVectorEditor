@@ -2,11 +2,16 @@ package com.example.demo.shapes;
 
 import com.example.demo.mousePressRelease.MousePressReleaseController;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShapesController {
     @FXML
@@ -16,9 +21,15 @@ public class ShapesController {
     private ComboBox<String> opacityComboBox;
 
     @FXML
+    private ToggleButton toggleButton;
+
+    @FXML
     private Pane drawPane;
 
     private final MousePressReleaseController mousePressReleaseController;
+
+    private final Map<Node, Double[]> shapePositions = new HashMap<>();
+
 
     public ShapesController(MousePressReleaseController mousePressReleaseController) {
         this.mousePressReleaseController = mousePressReleaseController;
@@ -30,6 +41,7 @@ public class ShapesController {
         setDrawPaneBackground();
 
         drawPane.setOnMouseClicked(this::handleMouseClicked);
+        toggleButton.setOnAction(event -> toggleDragAndDrop());
     }
 
     private void configureDrawPane() {
@@ -102,6 +114,53 @@ public class ShapesController {
         } else {
             return 1.0;
         }
+    }
+
+    private void toggleDragAndDrop() {
+        if (toggleButton.isSelected()) {
+            for (Node node : drawPane.getChildren()) {
+                if (node instanceof Shape) {
+                    enableDragAndDrop((Shape) node);
+                }
+            }
+            drawPane.setOnMouseClicked(null);
+        } else {
+            for (Node node : drawPane.getChildren()) {
+                if (node instanceof Shape) {
+                    disableDragAndDrop((Shape) node);
+                }
+            }
+            drawPane.setOnMouseClicked(this::handleMouseClicked);
+        }
+    }
+
+    private void enableDragAndDrop(Shape shape) {
+        shape.setOnMousePressed(event -> {
+            shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
+        });
+
+        shape.setOnMouseDragged(event -> {
+            Double[] position = shapePositions.get(shape);
+            if (position != null) {
+                double offsetX = event.getSceneX() - position[0];
+                double offsetY = event.getSceneY() - position[1];
+                double newTranslateX = offsetX + shape.getTranslateX();
+                double newTranslateY = offsetY + shape.getTranslateY();
+                shape.setTranslateX(newTranslateX);
+                shape.setTranslateY(newTranslateY);
+                shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
+            }
+        });
+
+        shape.setOnMouseReleased(event -> {
+            shapePositions.remove(shape);
+        });
+    }
+
+    private void disableDragAndDrop(Shape shape) {
+        shape.setOnMousePressed(null);
+        shape.setOnMouseDragged(null);
+        shape.setOnMouseReleased(null);
     }
 
     private void createShape(double x, double y, double width, double height, Color color) {

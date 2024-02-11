@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.collections.FXCollections?>
@@ -44,6 +45,8 @@
             </FXCollections>
         </items>
     </ComboBox>
+
+    <ToggleButton fx:id="toggleButton" text="Enable Drag &amp; Drop"/>
 
     <Pane fx:id="drawPane"/>
 
