@@ -8,7 +8,7 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.layout.Pane?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.demo.Shapes.ShapesController">
+      fx:controller="com.example.demo.shapes.ShapesController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
@@ -27,16 +27,20 @@
         </items>
     </ComboBox>
 
-    <ComboBox fx:id="angleComboBox" promptText="Select angle">
+    <ComboBox fx:id="opacityComboBox" promptText="Select a shape opacity">
         <items>
             <FXCollections fx:factory="observableArrayList">
-                <String fx:value="15" />
-                <String fx:value="30" />
-                <String fx:value="45" />
-                <String fx:value="60" />
-                <String fx:value="75" />
-                <String fx:value="90" />
-                <String fx:value="180" />
+                <String fx:value="100%" />
+                <String fx:value="90%" />
+                <String fx:value="80%" />
+                <String fx:value="60%" />
+                <String fx:value="50%" />
+                <String fx:value="40%" />
+                <String fx:value="70%" />
+                <String fx:value="30%" />
+                <String fx:value="20%" />
+                <String fx:value="10%" />
+                <String fx:value="0%" />
             </FXCollections>
         </items>
     </ComboBox>

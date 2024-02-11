@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.Shapes.ShapesController;
+import com.example.demo.shapes.ShapesController;
 import com.example.demo.mousePressRelease.MousePressReleaseController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
