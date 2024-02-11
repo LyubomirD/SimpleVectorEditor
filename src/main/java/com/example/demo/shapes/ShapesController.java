@@ -1,6 +1,7 @@
 package com.example.demo.shapes;
 
 import com.example.demo.mousePressRelease.MousePressReleaseController;
+import com.example.demo.opacity.OpacityController;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
@@ -27,12 +28,13 @@ public class ShapesController {
     private Pane drawPane;
 
     private final MousePressReleaseController mousePressReleaseController;
+    private final OpacityController opacityController;
 
     private final Map<Node, Double[]> shapePositions = new HashMap<>();
 
-
-    public ShapesController(MousePressReleaseController mousePressReleaseController) {
+    public ShapesController(MousePressReleaseController mousePressReleaseController, OpacityController opacityController) {
         this.mousePressReleaseController = mousePressReleaseController;
+        this.opacityController = opacityController;
     }
 
     @FXML
@@ -106,16 +108,6 @@ public class ShapesController {
         drawPane.getChildren().add(dot);
     }
 
-    private double getOpacityComboBox() {
-        String opacityText = opacityComboBox.getValue();
-        if (opacityText != null) {
-            double opacity = Double.parseDouble(opacityText.replace("%", "")) / 100.0;
-            return opacity;
-        } else {
-            return 1.0;
-        }
-    }
-
     private void toggleDragAndDrop() {
         if (toggleButton.isSelected()) {
             for (Node node : drawPane.getChildren()) {
@@ -163,9 +155,13 @@ public class ShapesController {
         shape.setOnMouseReleased(null);
     }
 
+    private double opacity() {
+        return opacityController.getOpacityComboBox(opacityComboBox);
+    }
+
     private void createShape(double x, double y, double width, double height, Color color) {
         Rectangle shape = new Rectangle(x, y, width, height);
-        color = color.deriveColor(0, 1, 1, getOpacityComboBox());
+        color = color.deriveColor(0, 1, 1, opacity());
         shape.setFill(color);
         drawPane.getChildren().add(shape);
     }
@@ -173,21 +169,21 @@ public class ShapesController {
     private void createTriangle(double x, double y, Color color) {
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(x, y + 30, x + 30, y + 30, x + 15, y);
-        color = color.deriveColor(0, 1, 1, getOpacityComboBox());
+        color = color.deriveColor(0, 1, 1, opacity());
         triangle.setFill(color);
         drawPane.getChildren().add(triangle);
     }
 
     private void createCircle(double x, double y, Color color) {
         Circle circle = new Circle(x, y, 15);
-        color = color.deriveColor(0, 1, 1, getOpacityComboBox());
+        color = color.deriveColor(0, 1, 1, opacity());
         circle.setFill(color);
         drawPane.getChildren().add(circle);
     }
 
     private void createOval(double x, double y, Color color) {
         Ellipse ellipse = new Ellipse(x + 30, y + 15, 30, 15);
-        color = color.deriveColor(0, 1, 1, getOpacityComboBox());
+        color = color.deriveColor(0, 1, 1, opacity());
         ellipse.setFill(color);
         drawPane.getChildren().add(ellipse);
     }

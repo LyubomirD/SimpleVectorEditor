@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.opacity.OpacityController;
 import com.example.demo.shapes.ShapesController;
 import com.example.demo.mousePressRelease.MousePressReleaseController;
 import javafx.application.Application;
@@ -14,7 +15,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        fxmlLoader.setControllerFactory(param -> new ShapesController(new MousePressReleaseController()));
+
+        fxmlLoader.setControllerFactory(param -> new ShapesController(
+                new MousePressReleaseController(),
+                new OpacityController()
+                ));
+
         Parent root = fxmlLoader.load();
 
         stage.setScene(new Scene(root, 425, 550));

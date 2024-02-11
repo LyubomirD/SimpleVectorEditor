@@ -34,10 +34,10 @@
                 <String fx:value="100%" />
                 <String fx:value="90%" />
                 <String fx:value="80%" />
+                <String fx:value="70%" />
                 <String fx:value="60%" />
                 <String fx:value="50%" />
                 <String fx:value="40%" />
-                <String fx:value="70%" />
                 <String fx:value="30%" />
                 <String fx:value="20%" />
                 <String fx:value="10%" />
