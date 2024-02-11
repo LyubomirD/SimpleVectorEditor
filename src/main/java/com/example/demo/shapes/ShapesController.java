@@ -16,6 +16,8 @@ import javafx.scene.shape.*;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO make the shapes when they are dragged and dropped to not go outside the Pane border
+
 public class ShapesController {
     @FXML
     private ComboBox<String> shapeComboBox;
@@ -35,10 +37,7 @@ public class ShapesController {
     @FXML
     private Slider sliderWight;
 
-
-    //TODO make the shapes when they are dragged and dropped to not go outside the Pane border
-    //TODO after creating a line to stop making ones
-
+    private double startX, startY;
     private final MousePressReleaseController mousePressReleaseController;
     private final OpacityController opacityController;
 
@@ -58,6 +57,8 @@ public class ShapesController {
         toggleButton.setOnAction(event -> toggleDragAndDrop());
     }
 
+
+    /** Start Pane set up */
     private void configureDrawPane() {
         drawPane.setMaxSize(400, 400);
         drawPane.setPrefSize(400, 400);
@@ -71,67 +72,106 @@ public class ShapesController {
     private void setDrawPaneBackground() {
         drawPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
     }
+    /** End Pane set up */
 
+
+    /** Start Helping methods */
     private Color changeColor() {
         return colorPicker.getValue();
     }
 
+    private double shapesSizeChange() {
+        return sliderWight.getValue();
+    }
+
+    private double opacity() {
+        return opacityController.getOpacityComboBox(opacityComboBox);
+    }
+    /** End Helping methods */
+
+
+    /** Start Switch Statement */
     private void handleMouseClicked(MouseEvent event) {
+
         String selectedShape = shapeComboBox.getValue();
         if (selectedShape != null) {
             switch (selectedShape) {
                 case "Line":
-                    mousePressReleaseController.setOnMousePressed(drawPane, shapeComboBox, this::createLine);
+                    createLinePosition();
                     break;
                 case "Dot":
                     createDot(event.getX(), event.getY(), changeColor());
                     break;
                 case "Square":
-                    createShape(event.getX(), event.getY(), 30, 30, changeColor());
+                    createShape(event.getX(), event.getY(), shapesSizeChange(), shapesSizeChange(), changeColor());
                     break;
                 case "Rectangle":
-                    createShape(event.getX(), event.getY(), 60, 30, changeColor());
+                    createShape(event.getX(), event.getY(), shapesSizeChange() * 2, shapesSizeChange(), changeColor());
                     break;
                 case "Triangle":
-                    createTriangle(event.getX(), event.getY(), changeColor());
+                    createTriangle(event.getX(), event.getY(), shapesSizeChange(), changeColor());
                     break;
                 case "Circle":
-                    createCircle(event.getX(), event.getY(), changeColor());
+                    createCircle(event.getX(), event.getY(), shapesSizeChange(), changeColor());
                     break;
                 case "Oval":
-                    createOval(event.getX(), event.getY(), changeColor());
+                    createOval(event.getX(), event.getY(), shapesSizeChange(), changeColor());
                     break;
             }
         }
     }
+    /** End Switch Statement */
 
-    private double lineAndDotWight() {
-        System.out.println(sliderWight.getValue());
-        return sliderWight.getValue();
-    }
 
-    private void createLine(MouseEvent event) {
-        double startX = event.getX();
-        double startY = event.getY();
-        mousePressReleaseController.setOnMouseReleased(drawPane, shapeComboBox, event2 -> {
-            double endX = event2.getX();
-            double endY = event2.getY();
+    /** Start Line code */
+    private void createLinePosition() {
+        drawPane.setOnMousePressed(event -> {
+            if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line") && mousePositionLogic(event)) {
+                startX = event.getX();
+                startY = event.getY();
+            }
+        });
 
-            Line line = new Line(startX, startY, endX, endY);
-            line.setStroke(changeColor());
-            line.setStrokeWidth(lineAndDotWight());
-            drawPane.getChildren().add(line);
+        drawPane.setOnMouseReleased(event -> {
+            if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line") && mousePositionLogic(event)) {
+                double endX = event.getX();
+                double endY = event.getY();
+                createLine(startX, startY, endX, endY);
+            }
         });
     }
 
+    private boolean mousePositionLogic(MouseEvent event) {
+        double positionX = event.getX();
+        double positionY = event.getY();
+
+        if (!(positionX <= drawPane.getMaxWidth() && positionX >= drawPane.getMinWidth())) {
+            return false;
+        }
+
+        if (!(positionY <= drawPane.getMaxHeight() && positionY >= drawPane.getMinHeight())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void createLine(double startX, double startY, double endX, double endY) {
+        Line line = new Line(startX, startY, endX, endY);
+        line.setStroke(changeColor());
+        line.setStrokeWidth(shapesSizeChange());
+        drawPane.getChildren().add(line);
+    }
+
     private void createDot(double x, double y, Color color) {
-        Circle dot = new Circle(x, y, lineAndDotWight());
+        Circle dot = new Circle(x, y, shapesSizeChange());
         dot.setFill(color);
         drawPane.getChildren().add(dot);
     }
+    /** End Line code */
 
-    //Start of methods for drag and drop shapes
 
+    /** Start of methods for drag and drop shapes */
     private void toggleDragAndDrop() {
         if (toggleButton.isSelected()) {
             for (Node node : drawPane.getChildren()) {
@@ -182,13 +222,10 @@ public class ShapesController {
         shape.setOnMouseDragged(null);
         shape.setOnMouseReleased(null);
     }
+    /** End of methods for drag and drop shapes */
 
-    //End of methods for drag and drop shapes
 
-    private double opacity() {
-        return opacityController.getOpacityComboBox(opacityComboBox);
-    }
-
+    /** Start method make Shapes */
     private void createShape(double x, double y, double width, double height, Color color) {
         Rectangle shape = new Rectangle(x, y, width, height);
         color = color.deriveColor(0, 1, 1, opacity());
@@ -196,25 +233,26 @@ public class ShapesController {
         drawPane.getChildren().add(shape);
     }
 
-    private void createTriangle(double x, double y, Color color) {
+    private void createTriangle(double x, double y, double size, Color color) {
         Polygon triangle = new Polygon();
-        triangle.getPoints().addAll(x, y + 30, x + 30, y + 30, x + 15, y);
+        triangle.getPoints().addAll(x, y + size, x + size, y + size, x + size / 2, y);
         color = color.deriveColor(0, 1, 1, opacity());
         triangle.setFill(color);
         drawPane.getChildren().add(triangle);
     }
 
-    private void createCircle(double x, double y, Color color) {
-        Circle circle = new Circle(x, y, 15);
+    private void createCircle(double x, double y, double size, Color color) {
+        Circle circle = new Circle(x, y, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         circle.setFill(color);
         drawPane.getChildren().add(circle);
     }
 
-    private void createOval(double x, double y, Color color) {
-        Ellipse ellipse = new Ellipse(x + 30, y + 15, 30, 15);
+    private void createOval(double x, double y, double size, Color color) {
+        Ellipse ellipse = new Ellipse(x + size, y + size / 2, size, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         ellipse.setFill(color);
         drawPane.getChildren().add(ellipse);
     }
+    /** End method make Shapes */
 }
