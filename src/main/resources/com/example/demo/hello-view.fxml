@@ -23,6 +23,7 @@
             <ComboBox fx:id="shapeComboBox" promptText="Select a shape">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Select a shape" />
                         <String fx:value="Line" />
                         <String fx:value="Dot" />
                         <String fx:value="Square" />
