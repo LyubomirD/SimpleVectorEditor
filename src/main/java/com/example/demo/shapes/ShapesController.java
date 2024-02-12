@@ -12,8 +12,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //TODO make the shapes when they are dragged and dropped to not go outside the Pane border
@@ -37,11 +40,14 @@ public class ShapesController {
     @FXML
     private Slider sliderWight;
 
+    @FXML
+    private Text selectionStatusText;
+
     private double startX, startY;
     private final MousePressReleaseController mousePressReleaseController;
     private final OpacityController opacityController;
-
     private final Map<Node, Double[]> shapePositions = new HashMap<>();
+    private final List<Node> selectedShapes = new ArrayList<>();
 
     public ShapesController(MousePressReleaseController mousePressReleaseController, OpacityController opacityController) {
         this.mousePressReleaseController = mousePressReleaseController;
@@ -54,11 +60,14 @@ public class ShapesController {
         setDrawPaneBackground();
 
         drawPane.setOnMouseClicked(this::handleMouseClicked);
-        toggleButton.setOnAction(event -> toggleDragAndDrop());
+        drawPane.setOnMouseDragged(this::handleShapeMouseDragged);
+        //toggleButton.setOnAction(event -> toggleDragAndDrop());
     }
 
 
-    /** Start Pane set up */
+    /**
+     * Start Pane set up
+     */
     private void configureDrawPane() {
         drawPane.setMaxSize(400, 400);
         drawPane.setPrefSize(400, 400);
@@ -75,7 +84,9 @@ public class ShapesController {
     /** End Pane set up */
 
 
-    /** Start Helping methods */
+    /**
+     * Start Helping methods
+     */
     private Color changeColor() {
         return colorPicker.getValue();
     }
@@ -90,9 +101,10 @@ public class ShapesController {
     /** End Helping methods */
 
 
-    /** Start Switch Statement */
+    /**
+     * Start Switch Statement
+     */
     private void handleMouseClicked(MouseEvent event) {
-
         String selectedShape = shapeComboBox.getValue();
         if (selectedShape != null) {
             switch (selectedShape) {
@@ -123,7 +135,9 @@ public class ShapesController {
     /** End Switch Statement */
 
 
-    /** Start Line code */
+    /**
+     * Start Line code
+     */
     private void createLinePosition() {
         drawPane.setOnMousePressed(event -> {
             if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line") && mousePositionLogic(event)) {
@@ -160,76 +174,129 @@ public class ShapesController {
         Line line = new Line(startX, startY, endX, endY);
         line.setStroke(changeColor());
         line.setStrokeWidth(shapesSizeChange());
+        line.setOnMousePressed(event -> handleShapeMousePressed(event, line));
         drawPane.getChildren().add(line);
     }
 
     private void createDot(double x, double y, Color color) {
         Circle dot = new Circle(x, y, shapesSizeChange());
         dot.setFill(color);
+        dot.setOnMousePressed(event -> handleShapeMousePressed(event, dot));
         drawPane.getChildren().add(dot);
     }
     /** End Line code */
 
 
-    /** Start of methods for drag and drop shapes */
-    private void toggleDragAndDrop() {
-        if (toggleButton.isSelected()) {
-            for (Node node : drawPane.getChildren()) {
-                if (node instanceof Shape) {
-                    enableDragAndDrop((Shape) node);
-                }
-            }
-            drawPane.setOnMouseClicked(null);
+//    /**
+//     * Start of methods for drag and drop shapes
+//     */
+//    private void toggleDragAndDrop() {
+//        if (toggleButton.isSelected()) {
+//            for (Node node : drawPane.getChildren()) {
+//                if (node instanceof Shape) {
+//                    enableDragAndDrop((Shape) node);
+//                }
+//            }
+//            drawPane.setOnMouseClicked(null);
+//        } else {
+//            for (Node node : drawPane.getChildren()) {
+//                if (node instanceof Shape) {
+//                    disableDragAndDrop((Shape) node);
+//                }
+//            }
+//            drawPane.setOnMouseClicked(this::handleMouseClicked);
+//        }
+//    }
+//
+//    private void enableDragAndDrop(Shape shape) {
+//        shape.setOnMousePressed(event -> {
+//            shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
+//        });
+//
+//        shape.setOnMouseDragged(event -> {
+//            Double[] position = shapePositions.get(shape);
+//
+//            if (position != null) {
+//                double offsetX = event.getSceneX() - position[0];
+//                double offsetY = event.getSceneY() - position[1];
+//
+//                double newTranslateX = offsetX + shape.getTranslateX();
+//                double newTranslateY = offsetY + shape.getTranslateY();
+//
+//                shape.setTranslateX(newTranslateX);
+//                shape.setTranslateY(newTranslateY);
+//
+//                shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
+//            }
+//        });
+//
+//        shape.setOnMouseReleased(event -> {
+//            shapePositions.remove(shape);
+//        });
+//    }
+//
+//    private void disableDragAndDrop(Shape shape) {
+//        shape.setOnMousePressed(null);
+//        shape.setOnMouseDragged(null);
+//        shape.setOnMouseReleased(null);
+//    }
+//    /** End of methods for drag and drop shapes */
+
+
+    /** Start of methods for multiple drag and drop shapes */
+    private void toggleSelection(Node shape) {
+        if (selectedShapes.contains(shape)) {
+            selectedShapes.remove(shape);
         } else {
-            for (Node node : drawPane.getChildren()) {
-                if (node instanceof Shape) {
-                    disableDragAndDrop((Shape) node);
-                }
-            }
-            drawPane.setOnMouseClicked(this::handleMouseClicked);
+            selectedShapes.add(shape);
         }
     }
 
-    private void enableDragAndDrop(Shape shape) {
-        shape.setOnMousePressed(event -> {
-            shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
-        });
 
-        shape.setOnMouseDragged(event -> {
-            Double[] position = shapePositions.get(shape);
-
-            if (position != null) {
-                double offsetX = event.getSceneX() - position[0];
-                double offsetY = event.getSceneY() - position[1];
-
-                double newTranslateX = offsetX + shape.getTranslateX();
-                double newTranslateY = offsetY + shape.getTranslateY();
-
-                shape.setTranslateX(newTranslateX);
-                shape.setTranslateY(newTranslateY);
-
-                shapePositions.put(shape, new Double[]{event.getSceneX(), event.getSceneY()});
+    private void handleShapeMousePressed(MouseEvent event, Node shape) {
+        if (event.isShiftDown()) {
+            toggleSelection(shape);
+        } else {
+            if (!selectedShapes.contains(shape)) {
+                selectedShapes.clear();
+                selectedShapes.add(shape);
             }
-        });
+        }
+        startX = event.getX();
+        startY = event.getY();
 
-        shape.setOnMouseReleased(event -> {
-            shapePositions.remove(shape);
-        });
+        // Update selection status text
+        if (event.isShiftDown()) {
+            selectionStatusText.setText("Multiple selection is: ON");
+        } else {
+            selectionStatusText.setText("Multiple selection is: OFF");
+        }
     }
 
-    private void disableDragAndDrop(Shape shape) {
-        shape.setOnMousePressed(null);
-        shape.setOnMouseDragged(null);
-        shape.setOnMouseReleased(null);
+    private void handleShapeMouseDragged(MouseEvent event) {
+        if (!selectedShapes.isEmpty()) {
+            double offsetX = event.getX() - startX;
+            double offsetY = event.getY() - startY;
+            for (Node shape : selectedShapes) {
+                shape.setTranslateX(shape.getTranslateX() + offsetX);
+                shape.setTranslateY(shape.getTranslateY() + offsetY);
+            }
+            startX = event.getX();
+            startY = event.getY();
+        }
     }
-    /** End of methods for drag and drop shapes */
+
+    /** End of methods for multiple drag and drop shapes */
 
 
-    /** Start method make Shapes */
+    /**
+     * Start method make Shapes
+     */
     private void createShape(double x, double y, double width, double height, Color color) {
         Rectangle shape = new Rectangle(x, y, width, height);
         color = color.deriveColor(0, 1, 1, opacity());
         shape.setFill(color);
+        shape.setOnMousePressed(event -> handleShapeMousePressed(event, shape));
         drawPane.getChildren().add(shape);
     }
 
@@ -238,6 +305,7 @@ public class ShapesController {
         triangle.getPoints().addAll(x, y + size, x + size, y + size, x + size / 2, y);
         color = color.deriveColor(0, 1, 1, opacity());
         triangle.setFill(color);
+        triangle.setOnMousePressed(event -> handleShapeMousePressed(event, triangle));
         drawPane.getChildren().add(triangle);
     }
 
@@ -245,6 +313,7 @@ public class ShapesController {
         Circle circle = new Circle(x, y, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         circle.setFill(color);
+        circle.setOnMousePressed(event -> handleShapeMousePressed(event, circle));
         drawPane.getChildren().add(circle);
     }
 
@@ -252,6 +321,7 @@ public class ShapesController {
         Ellipse ellipse = new Ellipse(x + size, y + size / 2, size, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         ellipse.setFill(color);
+        ellipse.setOnMousePressed(event -> handleShapeMousePressed(event, ellipse));
         drawPane.getChildren().add(ellipse);
     }
     /** End method make Shapes */

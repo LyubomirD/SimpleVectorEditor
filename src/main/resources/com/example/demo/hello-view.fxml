@@ -11,6 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Text?>
 <VBox alignment="CENTER_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.demo.shapes.ShapesController">
     <padding>
@@ -63,7 +64,10 @@
         </VBox>
     </HBox>
 
-    <ToggleButton fx:id="toggleButton" text="Enable Drag &amp; Drop"/>
+    <HBox>
+        <ToggleButton fx:id="toggleButton" text="Enable Drag &amp; Drop"/>
+        <Text fx:id="selectionStatusText" text="Multiple selection is: OFF"/>
+    </HBox>
 
     <Pane fx:id="drawPane"/>
 
