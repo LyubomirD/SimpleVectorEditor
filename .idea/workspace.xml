@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" afterDir="false" />
     </list>

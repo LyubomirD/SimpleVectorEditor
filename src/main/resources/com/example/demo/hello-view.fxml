@@ -66,8 +66,7 @@
     </HBox>
 
     <HBox>
-        <ToggleButton fx:id="toggleButton" text="Enable Drag &amp; Drop"/>
-        <Text fx:id="selectionStatusText" text="Multiple selection is: OFF"/>
+        <Text fx:id="selectionStatusText" text="Selection is: OFF"/>
     </HBox>
 
     <Pane fx:id="drawPane"/>
