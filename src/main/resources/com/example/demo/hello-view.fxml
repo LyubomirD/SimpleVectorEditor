@@ -31,6 +31,7 @@
                         <String fx:value="Triangle" />
                         <String fx:value="Circle" />
                         <String fx:value="Oval" />
+                        <String fx:value="Star" />
                     </FXCollections>
                 </items>
             </ComboBox>

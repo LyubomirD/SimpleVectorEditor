@@ -125,6 +125,9 @@ public class ShapesController {
                 case "Oval":
                     createOval(event.getX(), event.getY(), shapesSizeChange(), changeColor());
                     break;
+                case "Star":
+                    createStar(event.getX(), event.getY(), shapesSizeChange(), changeColor());
+                    break;
             }
         }
     }
@@ -256,5 +259,30 @@ public class ShapesController {
         ellipse.setOnMousePressed(event -> handleShapeMousePressed(event, ellipse));
         drawPane.getChildren().add(ellipse);
     }
+
+    private void createStar(double x, double y, double size, Color color) {
+        Polyline star = new Polyline();
+
+        double innerRadius = size / 2;
+        double outerRadius = size;
+
+        for (int i = 0; i < 10; i++) {
+            double radius = (i % 2 == 0) ? outerRadius : innerRadius;
+            double angle = Math.PI / 5 * i;
+            double pointX = x + Math.cos(angle) * radius;
+            double pointY = y + Math.sin(angle) * radius;
+            star.getPoints().addAll(pointX, pointY);
+        }
+
+        color = color.deriveColor(0, 1, 1, opacity());
+        star.setOnMousePressed(event -> handleShapeMousePressed(event, star));
+        star.setFill(color);
+        drawPane.getChildren().add(star);
+    }
     /** End method make Shapes */
+
+
+    /** Start rotate shapes logic */
+//TODO rotate shapes logic
+    /** End rotate shapes logic */
 }
