@@ -61,8 +61,13 @@
                     <Color/>
                 </value>
             </ColorPicker>
-
-            <Slider fx:id="sliderWight"></Slider>
+            <Text text="Choose Weight: "></Text>
+            <Slider fx:id="sliderWeight"></Slider>
+        </VBox>
+        <VBox>
+            <Text text="Choose Angle: "/>
+            <Slider fx:id="sliderAngle" min="0" max="360" value="0"/>
+            <Text fx:id="angleDisplay"/>
         </VBox>
     </HBox>
 

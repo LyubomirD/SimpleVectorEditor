@@ -1,26 +1,23 @@
 package com.example.demo.shapes;
 
-import com.example.demo.mousePressRelease.MousePressReleaseController;
 import com.example.demo.opacity.OpacityController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-//TODO make the shapes when they are dragged and dropped to not go outside the Pane border
 
 public class ShapesController {
     @FXML
@@ -39,11 +36,19 @@ public class ShapesController {
     private ColorPicker colorPicker;
 
     @FXML
-    private Slider sliderWight;
+    private Slider sliderWeight;
+
+    @FXML
+    private Slider sliderAngle;
+
+    @FXML
+    private Text angleDisplay;
 
     private double startX, startY;
     private final OpacityController opacityController;
     private final List<Node> selectedShapes = new ArrayList<>();
+    private double rotationAngle = 0.0;
+
 
     public ShapesController(OpacityController opacityController) {
         this.opacityController = opacityController;
@@ -56,8 +61,17 @@ public class ShapesController {
 
         drawPane.setOnMouseClicked(this::handleMouseClicked);
         drawPane.setOnMouseDragged(this::handleShapeMouseDragged);
-    }
 
+        sliderAngle.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                rotationAngle = newValue.intValue(); // Cast newValue to int
+                rotateSelectedShapes();
+                angleDisplay.setText("Angle: " + rotationAngle + "°");
+            }
+        });
+
+    }
 
     /**
      * Start Pane set up
@@ -86,7 +100,7 @@ public class ShapesController {
     }
 
     private double shapesSizeChange() {
-        return sliderWight.getValue();
+        return sliderWeight.getValue();
     }
 
     private double opacity() {
@@ -124,9 +138,6 @@ public class ShapesController {
                     break;
                 case "Oval":
                     createOval(event.getX(), event.getY(), shapesSizeChange(), changeColor());
-                    break;
-                case "Star":
-                    createStar(event.getX(), event.getY(), shapesSizeChange(), changeColor());
                     break;
             }
         }
@@ -187,7 +198,7 @@ public class ShapesController {
 
 
 
-    /** Start of methods for multiple drag and drop shapes */
+    /** Start drag and drop shapes */
     private void handleShapeMousePressed(MouseEvent event, Node shape) {
         if (event.isShiftDown()) {
             shapeComboBox.setValue("Select a shape");
@@ -221,7 +232,7 @@ public class ShapesController {
             startY = event.getY();
         }
     }
-    /** End of methods for multiple drag and drop shapes */
+    /** End drag and drop shapes */
 
 
     /**
@@ -259,30 +270,17 @@ public class ShapesController {
         ellipse.setOnMousePressed(event -> handleShapeMousePressed(event, ellipse));
         drawPane.getChildren().add(ellipse);
     }
-
-    private void createStar(double x, double y, double size, Color color) {
-        Polyline star = new Polyline();
-
-        double innerRadius = size / 2;
-        double outerRadius = size;
-
-        for (int i = 0; i < 10; i++) {
-            double radius = (i % 2 == 0) ? outerRadius : innerRadius;
-            double angle = Math.PI / 5 * i;
-            double pointX = x + Math.cos(angle) * radius;
-            double pointY = y + Math.sin(angle) * radius;
-            star.getPoints().addAll(pointX, pointY);
-        }
-
-        color = color.deriveColor(0, 1, 1, opacity());
-        star.setOnMousePressed(event -> handleShapeMousePressed(event, star));
-        star.setFill(color);
-        drawPane.getChildren().add(star);
-    }
     /** End method make Shapes */
 
 
     /** Start rotate shapes logic */
-//TODO rotate shapes logic
+    private void rotateSelectedShapes() {
+        for (Node shape : selectedShapes) {
+            double centerX = shape.getBoundsInLocal().getWidth() / 2.0 + shape.getBoundsInLocal().getMinX();
+            double centerY = shape.getBoundsInLocal().getHeight() / 2.0 + shape.getBoundsInLocal().getMinY();
+            shape.getTransforms().clear();
+            shape.getTransforms().add(new Rotate(rotationAngle, centerX, centerY));
+        }
+    }
     /** End rotate shapes logic */
 }
