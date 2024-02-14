@@ -31,7 +31,6 @@
                         <String fx:value="Triangle" />
                         <String fx:value="Circle" />
                         <String fx:value="Oval" />
-                        <String fx:value="Star" />
                     </FXCollections>
                 </items>
             </ComboBox>
@@ -67,7 +66,7 @@
         <VBox>
             <Text text="Choose Angle: "/>
             <Slider fx:id="sliderAngle" min="0" max="360" value="0"/>
-            <Text fx:id="angleDisplay"/>
+            <Text fx:id="angleDisplay" text="Angle: 0°"/>
         </VBox>
     </HBox>
 

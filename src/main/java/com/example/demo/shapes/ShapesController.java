@@ -62,15 +62,12 @@ public class ShapesController {
         drawPane.setOnMouseClicked(this::handleMouseClicked);
         drawPane.setOnMouseDragged(this::handleShapeMouseDragged);
 
-        sliderAngle.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                rotationAngle = newValue.intValue(); // Cast newValue to int
-                rotateSelectedShapes();
-                angleDisplay.setText("Angle: " + rotationAngle + "°");
-            }
-        });
+        sliderAngle.valueProperty().addListener((observable, oldValue, newValue) -> {
+            rotationAngle = newValue.intValue();
+            rotateSelectedShapes();
 
+            angleDisplay.setText("Angle: " + rotationAngle + "°");
+        });
     }
 
     /**
@@ -197,8 +194,9 @@ public class ShapesController {
     /** End Line code */
 
 
-
-    /** Start drag and drop shapes */
+    /**
+     * Start drag and drop shapes
+     */
     private void handleShapeMousePressed(MouseEvent event, Node shape) {
         if (event.isShiftDown()) {
             shapeComboBox.setValue("Select a shape");
@@ -207,6 +205,7 @@ public class ShapesController {
         } else {
             selectedShapes.clear();
             selectionStatusText.setText("Selection is: OFF");
+            sliderAngle.setValue(0);
         }
         startX = event.getX();
         startY = event.getY();
@@ -273,7 +272,9 @@ public class ShapesController {
     /** End method make Shapes */
 
 
-    /** Start rotate shapes logic */
+    /**
+     * Start rotate shapes logic
+     */
     private void rotateSelectedShapes() {
         for (Node shape : selectedShapes) {
             double centerX = shape.getBoundsInLocal().getWidth() / 2.0 + shape.getBoundsInLocal().getMinX();
