@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 <VBox alignment="CENTER_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.demo.shapes.ShapesController">
+      fx:controller="com.example.demo.MainController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
@@ -60,10 +60,12 @@
                     <Color/>
                 </value>
             </ColorPicker>
-            <Text text="Choose Weight: "></Text>
-            <Slider fx:id="sliderWeight"></Slider>
         </VBox>
         <VBox>
+            <Text text="Choose Size: "></Text>
+            <Slider fx:id="sliderSize" min="1" max="100" value="1"></Slider>
+            <Text fx:id="sizeDisplay" text="Size: 1"/>
+            <Text text=" "/>
             <Text text="Choose Angle: "/>
             <Slider fx:id="sliderAngle" min="0" max="360" value="0"/>
             <Text fx:id="angleDisplay" text="Angle: 0°"/>

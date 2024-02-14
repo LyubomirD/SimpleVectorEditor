@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c66d3f8c-6159-4d58-816e-4c2bd71f3245" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/module-info.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/mousePressRelease/MousePressReleaseController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/opacity/OpacityController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,9 +63,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.demo" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.demo.HelloApplication" />
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.Application" />
       <module name="demo" />
       <extension name="coverage">
         <pattern>

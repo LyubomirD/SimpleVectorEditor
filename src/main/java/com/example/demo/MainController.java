@@ -1,8 +1,5 @@
-package com.example.demo.shapes;
+package com.example.demo;
 
-import com.example.demo.opacity.OpacityController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
@@ -19,7 +16,40 @@ import javafx.scene.transform.Rotate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapesController {
+public class MainController {
+    /**
+     *
+     * Choose size and color of the shape beforehand
+     * Choose the shape and opacity beforehand
+     * !Opacity by default is 100% meaning NO OPACITY
+     *
+     *
+     * To move shape individually:
+     * 1. Press SHIFT and hold
+     * 2. Double right-click it
+     * 3. Drag it without releasing the right button and
+     * 4. Drop it by releasing the right-button
+     * 5. Click on any shape to turn OFF selection
+     *
+     * To move multiple shapes:
+     * 1. Press SHIFT and hold
+     * 2. Right-click all the shapes you want to move
+     * 3. Right-click the last shape you want to move and hold it
+     * 4. You will drag the shapes as one
+     * 5. Release the right button to drop them into position
+     * 6. Click on any shape to turn OFF selection
+     *
+     * To rotate multiple of individual shapes:
+     * 1. Press SHIFT
+     * 2. Select the shape/shapes with the right-click
+     * 3. Release SHIFT or not you choose
+     * 4. Move the Angle Slider or use the left and right arrow keys
+     * 5. Click on any shape to turn OFF selection
+     *
+     * */
+
+
+    //Start FXML components
     @FXML
     private ComboBox<String> shapeComboBox;
 
@@ -36,7 +66,7 @@ public class ShapesController {
     private ColorPicker colorPicker;
 
     @FXML
-    private Slider sliderWeight;
+    private Slider sliderSize;
 
     @FXML
     private Slider sliderAngle;
@@ -44,16 +74,19 @@ public class ShapesController {
     @FXML
     private Text angleDisplay;
 
+    @FXML
+    private Text sizeDisplay;
+    //End FXML components
+
+    //Start Global Variables
     private double startX, startY;
-    private final OpacityController opacityController;
     private final List<Node> selectedShapes = new ArrayList<>();
     private double rotationAngle = 0.0;
+    private double proportions = 1.0;
+    //End Global Variables
 
 
-    public ShapesController(OpacityController opacityController) {
-        this.opacityController = opacityController;
-    }
-
+    //Start Initialize method
     @FXML
     private void initialize() {
         configureDrawPane();
@@ -68,11 +101,17 @@ public class ShapesController {
 
             angleDisplay.setText("Angle: " + rotationAngle + "°");
         });
-    }
 
-    /**
-     * Start Pane set up
-     */
+        sliderSize.valueProperty().addListener((observable, oldValue, newValue) -> {
+            proportions = newValue.doubleValue();
+
+            sizeDisplay.setText("Size: " + newValue.intValue());
+        });
+    }
+    //End Initialize method
+
+
+    //Start Configure pane
     private void configureDrawPane() {
         drawPane.setMaxSize(400, 400);
         drawPane.setPrefSize(400, 400);
@@ -86,29 +125,49 @@ public class ShapesController {
     private void setDrawPaneBackground() {
         drawPane.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
     }
-    /** End Pane set up */
+    //End Configure pane
 
 
-    /**
-     * Start Helping methods
-     */
+    //Start Choose color
     private Color changeColor() {
         return colorPicker.getValue();
     }
+    //End Choose color
 
+
+    //Start choose shape size
     private double shapesSizeChange() {
-        return sliderWeight.getValue();
+        return proportions;
     }
+    //End choose shape size
 
+
+    //Start rotation of shapes
+    private void rotateSelectedShapes() {
+        for (Node shape : selectedShapes) {
+            double centerX = shape.getBoundsInLocal().getWidth() / 2.0 + shape.getBoundsInLocal().getMinX();
+            double centerY = shape.getBoundsInLocal().getHeight() / 2.0 + shape.getBoundsInLocal().getMinY();
+            shape.getTransforms().clear();
+            shape.getTransforms().add(new Rotate(rotationAngle, centerX, centerY));
+        }
+    }
+    //End rotation of shapes
+
+
+    //Start Choose opacity
     private double opacity() {
-        return opacityController.getOpacityComboBox(opacityComboBox);
+        String opacityText = opacityComboBox.getValue();
+        if (opacityText != null) {
+            double opacity = Double.parseDouble(opacityText.replace("%", "")) / 100.0;
+            return opacity;
+        } else {
+            return 1.0;
+        }
     }
-    /** End Helping methods */
+    //End Choose opacity
 
 
-    /**
-     * Start Switch Statement
-     */
+    //Start Choose shape from combobox
     private void handleMouseClicked(MouseEvent event) {
         String selectedShape = shapeComboBox.getValue();
         if (selectedShape != null) {
@@ -139,12 +198,10 @@ public class ShapesController {
             }
         }
     }
-    /** End Switch Statement */
+    //End Choose shape from combobox
 
 
-    /**
-     * Start Line code
-     */
+    //Start create line and dot
     private void createLinePosition() {
         drawPane.setOnMousePressed(event -> {
             if (shapeComboBox.getValue() != null && shapeComboBox.getValue().equals("Line") && mousePositionLogic(event)) {
@@ -191,12 +248,10 @@ public class ShapesController {
         dot.setOnMousePressed(event -> handleShapeMousePressed(event, dot));
         drawPane.getChildren().add(dot);
     }
-    /** End Line code */
+    //End create line and dot
 
 
-    /**
-     * Start drag and drop shapes
-     */
+    //Start drag and drop
     private void handleShapeMousePressed(MouseEvent event, Node shape) {
         if (event.isShiftDown()) {
             shapeComboBox.setValue("Select a shape");
@@ -231,12 +286,10 @@ public class ShapesController {
             startY = event.getY();
         }
     }
-    /** End drag and drop shapes */
+    //End drag and drop
 
 
-    /**
-     * Start method make Shapes
-     */
+    //Start creating/making shapes
     private void createShape(double x, double y, double width, double height, Color color) {
         Rectangle shape = new Rectangle(x, y, width, height);
         color = color.deriveColor(0, 1, 1, opacity());
@@ -269,19 +322,5 @@ public class ShapesController {
         ellipse.setOnMousePressed(event -> handleShapeMousePressed(event, ellipse));
         drawPane.getChildren().add(ellipse);
     }
-    /** End method make Shapes */
-
-
-    /**
-     * Start rotate shapes logic
-     */
-    private void rotateSelectedShapes() {
-        for (Node shape : selectedShapes) {
-            double centerX = shape.getBoundsInLocal().getWidth() / 2.0 + shape.getBoundsInLocal().getMinX();
-            double centerY = shape.getBoundsInLocal().getHeight() / 2.0 + shape.getBoundsInLocal().getMinY();
-            shape.getTransforms().clear();
-            shape.getTransforms().add(new Rotate(rotationAngle, centerX, centerY));
-        }
-    }
-    /** End rotate shapes logic */
+    //End creating/making shapes
 }
