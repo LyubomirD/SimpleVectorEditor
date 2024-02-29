@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -235,6 +236,11 @@ public class MainController {
     }
 
     private void createLine(double startX, double startY, double endX, double endY) {
+        startX = clamp(startX, 0, drawPane.getWidth());
+        startY = clamp(startY, 0, drawPane.getHeight());
+        endX = clamp(endX, 0, drawPane.getWidth());
+        endY = clamp(endY, 0, drawPane.getHeight());
+
         Line line = new Line(startX, startY, endX, endY);
         line.setStroke(changeColor());
         line.setStrokeWidth(shapesSizeChange());
@@ -243,6 +249,9 @@ public class MainController {
     }
 
     private void createDot(double x, double y, Color color) {
+        x = clamp(x, 0, drawPane.getWidth());
+        y = clamp(y, 0, drawPane.getHeight());
+
         Circle dot = new Circle(x, y, shapesSizeChange());
         dot.setFill(color);
         dot.setOnMousePressed(event -> handleShapeMousePressed(event, dot));
@@ -291,6 +300,9 @@ public class MainController {
 
     //Start creating/making shapes
     private void createShape(double x, double y, double width, double height, Color color) {
+        x = clamp(x, 0, drawPane.getWidth());
+        y = clamp(y, 0, drawPane.getHeight());
+
         Rectangle shape = new Rectangle(x, y, width, height);
         color = color.deriveColor(0, 1, 1, opacity());
         shape.setFill(color);
@@ -299,6 +311,9 @@ public class MainController {
     }
 
     private void createTriangle(double x, double y, double size, Color color) {
+        x = clamp(x, 0, drawPane.getWidth());
+        y = clamp(y, 0, drawPane.getHeight());
+
         Polygon triangle = new Polygon();
         triangle.getPoints().addAll(x, y + size, x + size, y + size, x + size / 2, y);
         color = color.deriveColor(0, 1, 1, opacity());
@@ -308,6 +323,9 @@ public class MainController {
     }
 
     private void createCircle(double x, double y, double size, Color color) {
+        x = clamp(x, 0, drawPane.getWidth());
+        y = clamp(y, 0, drawPane.getHeight());
+
         Circle circle = new Circle(x, y, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         circle.setFill(color);
@@ -316,6 +334,9 @@ public class MainController {
     }
 
     private void createOval(double x, double y, double size, Color color) {
+        x = clamp(x, 0, drawPane.getWidth());
+        y = clamp(y, 0, drawPane.getHeight());
+
         Ellipse ellipse = new Ellipse(x + size, y + size / 2, size, size / 2);
         color = color.deriveColor(0, 1, 1, opacity());
         ellipse.setFill(color);
@@ -323,4 +344,11 @@ public class MainController {
         drawPane.getChildren().add(ellipse);
     }
     //End creating/making shapes
+
+
+    // Start clamp a value between a minimum and maximum
+    private double clamp(double value, double min, double max) {
+        return Math.min(max, Math.max(min, value));
+    }
+    // End clamp a value between a minimum and maximum
 }

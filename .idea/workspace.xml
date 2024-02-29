@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c66d3f8c-6159-4d58-816e-4c2bd71f3245" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo1/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/module-info.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/HelloController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../VectorProject/target/classes/org/example/vectorproject/hello-view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/mousePressRelease/MousePressReleaseController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/opacity/OpacityController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/shapes/ShapesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +78,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HelloApplication" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -97,6 +91,8 @@
       <option name="presentableId" value="Default" />
       <updated>1707337864222</updated>
       <workItem from="1707337865858" duration="33931000" />
+      <workItem from="1709109166995" duration="525000" />
+      <workItem from="1709215711207" duration="2040000" />
     </task>
     <servers />
   </component>
