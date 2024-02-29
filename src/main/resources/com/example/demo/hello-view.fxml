@@ -12,6 +12,7 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
 <VBox alignment="CENTER_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.demo.MainController">
     <padding>
@@ -72,6 +73,9 @@
         </VBox>
     </HBox>
 
+    <HBox>
+        <Button fx:id="clearPaneButton" text="Clear Canvas"/>
+    </HBox>
     <HBox>
         <Text fx:id="selectionStatusText" text="Selection is: OFF"/>
     </HBox>

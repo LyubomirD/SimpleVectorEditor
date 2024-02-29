@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -77,6 +79,9 @@ public class MainController {
 
     @FXML
     private Text sizeDisplay;
+
+    @FXML
+    private Button clearPaneButton;
     //End FXML components
 
     //Start Global Variables
@@ -108,6 +113,8 @@ public class MainController {
 
             sizeDisplay.setText("Size: " + newValue.intValue());
         });
+
+        clearPaneButton.setOnAction(this::clearTheWholePane);
     }
     //End Initialize method
 
@@ -351,4 +358,18 @@ public class MainController {
         return Math.min(max, Math.max(min, value));
     }
     // End clamp a value between a minimum and maximum
+
+
+    //Start erase shapes
+
+    //End erase shapes
+
+
+    //Start clear pane
+    private void clearTheWholePane(ActionEvent event) {
+        if (event.getSource() == clearPaneButton) {
+            drawPane.getChildren().clear();
+        }
+    }
+    //End clear pane
 }
