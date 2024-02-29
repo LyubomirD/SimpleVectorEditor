@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,22 +100,23 @@ public class MainController {
         configureDrawPane();
         setDrawPaneBackground();
 
+        // Shape creation and selection
         drawPane.setOnMouseClicked(this::handleMouseClicked);
         drawPane.setOnMouseDragged(this::handleShapeMouseDragged);
 
+        // Slider listeners
         sliderAngle.valueProperty().addListener((observable, oldValue, newValue) -> {
             rotationAngle = newValue.intValue();
             rotateSelectedShapes();
-
             angleDisplay.setText("Angle: " + rotationAngle + "°");
         });
 
         sliderSize.valueProperty().addListener((observable, oldValue, newValue) -> {
             proportions = newValue.doubleValue();
-
             sizeDisplay.setText("Size: " + newValue.intValue());
         });
 
+        // Erase functionality
         clearPaneButton.setOnAction(this::clearTheWholePane);
     }
     //End Initialize method
@@ -358,11 +361,6 @@ public class MainController {
         return Math.min(max, Math.max(min, value));
     }
     // End clamp a value between a minimum and maximum
-
-
-    //Start erase shapes
-
-    //End erase shapes
 
 
     //Start clear pane
