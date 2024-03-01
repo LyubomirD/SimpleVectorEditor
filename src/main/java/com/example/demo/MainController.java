@@ -286,12 +286,11 @@ public class MainController {
     }
 
     private void toggleSelection(Node shape) {
-        if (selectedShapes.contains(shape)) {
-            selectedShapes.remove(shape);
-        } else {
+        if (!selectedShapes.contains(shape)) {
             selectedShapes.add(shape);
         }
     }
+
 
     private void handleShapeMouseDragged(MouseEvent event) {
         if (!selectedShapes.isEmpty() && event.getButton() != MouseButton.SECONDARY) {
