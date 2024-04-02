@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.demo.MainController">
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER_LEFT" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.example.demo.MainController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
     <HBox>
@@ -58,28 +52,29 @@
         <VBox>
             <ColorPicker fx:id="colorPicker">
                 <value>
-                    <Color/>
+                    <Color />
                 </value>
             </ColorPicker>
         </VBox>
         <VBox>
-            <Text text="Choose Size: "></Text>
-            <Slider fx:id="sliderSize" min="1" max="100" value="1"></Slider>
-            <Text fx:id="sizeDisplay" text="Size: 1"/>
-            <Text text=" "/>
-            <Text text="Choose Angle: "/>
-            <Slider fx:id="sliderAngle" min="0" max="360" value="0"/>
-            <Text fx:id="angleDisplay" text="Angle: 0°"/>
+            <Text text="Choose Size: " />
+            <Slider fx:id="sliderSize" max="100" min="1" value="1" />
+            <Text fx:id="sizeDisplay" text="Size: 1" />
+            <Text text=" " />
+            <Text text="Choose Angle: " />
+            <Slider fx:id="sliderAngle" max="360" min="0" value="0" />
+            <Text fx:id="angleDisplay" text="Angle: 0°" />
         </VBox>
     </HBox>
 
     <HBox>
-        <Button fx:id="clearPaneButton" text="Clear Canvas"/>
+        <Button fx:id="clearPaneButton" text="Clear Canvas" />
+      <Button fx:id="download" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Download" />
     </HBox>
     <HBox>
-        <Text fx:id="selectionStatusText" text="Selection is: OFF"/>
+        <Text fx:id="selectionStatusText" text="Selection is: OFF" />
     </HBox>
 
-    <Pane fx:id="drawPane"/>
+    <Pane fx:id="drawPane" />
 
 </VBox>
