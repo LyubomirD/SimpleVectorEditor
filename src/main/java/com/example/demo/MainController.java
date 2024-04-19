@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -204,10 +205,10 @@ public class MainController {
                     createDot(event.getX(), event.getY(), changeColor());
                     break;
                 case "Square":
-                    createShape(event.getX(), event.getY(), shapesSizeChange(), shapesSizeChange(), changeColor());
+                    createSquareAndRectangle(event.getX(), event.getY(), shapesSizeChange(), shapesSizeChange(), changeColor());
                     break;
                 case "Rectangle":
-                    createShape(event.getX(), event.getY(), shapesSizeChange() * 2, shapesSizeChange(), changeColor());
+                    createSquareAndRectangle(event.getX(), event.getY(), shapesSizeChange() * 2, shapesSizeChange(), changeColor());
                     break;
                 case "Triangle":
                     createTriangle(event.getX(), event.getY(), shapesSizeChange(), changeColor());
@@ -320,15 +321,16 @@ public class MainController {
 
 
     //Start creating/making shapes
-    private void createShape(double x, double y, double width, double height, Color color) {
+    private void createSquareAndRectangle(double x, double y, double width, double height, Color color) {
         x = clamp(x, 0, drawPane.getWidth());
         y = clamp(y, 0, drawPane.getHeight());
 
-        Rectangle shape = new Rectangle(x, y, width, height);
+        Rectangle square = new Rectangle(x, y, width, height);
+        square.setRotate(sliderAngle.getValue());
         color = color.deriveColor(0, 1, 1, opacity());
-        shape.setFill(color);
-        shape.setOnMousePressed(event -> handleShapeMousePressed(event, shape));
-        drawPane.getChildren().add(shape);
+        square.setFill(color);
+        square.setOnMousePressed(event -> handleShapeMousePressed(event, square));
+        drawPane.getChildren().add(square);
     }
 
     private void createTriangle(double x, double y, double size, Color color) {
@@ -336,6 +338,7 @@ public class MainController {
         y = clamp(y, 0, drawPane.getHeight());
 
         Polygon triangle = new Polygon();
+        triangle.setRotate(sliderAngle.getValue());
         triangle.getPoints().addAll(x, y + size, x + size, y + size, x + size / 2, y);
         color = color.deriveColor(0, 1, 1, opacity());
         triangle.setFill(color);
@@ -359,6 +362,7 @@ public class MainController {
         y = clamp(y, 0, drawPane.getHeight());
 
         Ellipse ellipse = new Ellipse(x + size, y + size / 2, size, size / 2);
+        ellipse.setRotate(sliderAngle.getValue());
         color = color.deriveColor(0, 1, 1, opacity());
         ellipse.setFill(color);
         ellipse.setOnMousePressed(event -> handleShapeMousePressed(event, ellipse));

@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c66d3f8c-6159-4d58-816e-4c2bd71f3245" name="Changes" comment="updating drag and drop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demo/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/demo/hello-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +89,9 @@
       <workItem from="1709109166995" duration="525000" />
       <workItem from="1709215711207" duration="4821000" />
       <workItem from="1709283891689" duration="3977000" />
-      <workItem from="1712052195324" duration="3550000" />
+      <workItem from="1712052195324" duration="3786000" />
+      <workItem from="1712736457931" duration="507000" />
+      <workItem from="1713553098929" duration="2563000" />
     </task>
     <task id="LOCAL-00001" summary="updating drag and drop">
       <created>1709289877865</created>
